@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-x=$(tmux capture-pane -p -J -t !)
+x=$(tmux capture-pane -p -S '-' -J -t !)
 readarray -t pane_contents <<<"$x"
 
 # reverse loop through pane contents lines
@@ -10,7 +10,7 @@ for (( idx=${#pane_contents[@]}-2 ; idx>=0 ; idx-- )) ; do
   # strip trailing whitespace from line
   line=$(sed 's/[[:space:]]*$//' <<<"$line")
 
-  if [[ $line =~ $PROMPT_PATTERN ]]; then
+  if [[ $line =~ "$PROMPT_PATTERN" ]]; then
     break
   fi
 
